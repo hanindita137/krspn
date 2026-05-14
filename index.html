@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jejak Arcibs | SMKN 1 Jogonalan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            800: '#9f1239',
+                            900: '#881337',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; transition: background-color 0.3s, color 0.3s; }
+        .sidebar-link.active { background-color: #ffe4e6; color: #be123c; border-right: 4px solid #be123c; }
+        .dark .sidebar-link.active { background-color: #881337; color: #fda4af; border-right: 4px solid #f43f5e; }
+        
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 3px solid #be123c;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors duration-300">
+
+    <!-- Layar Login -->
+    <div id="loginScreen" class="min-h-screen flex items-center justify-center p-4">
+        <div class="max-w-md w-full bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-8 border border-slate-200 dark:border-slate-700">
+            <div class="text-center mb-8">
+                <div class="bg-primary-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg shadow-primary-200 dark:shadow-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
+                    </svg>
+                </div>
+                <h1 class="text-2xl font-bold text-slate-800 dark:text-white uppercase tracking-tight">Jejak Arcibs</h1>
+                <p class="text-slate-500 dark:text-slate-400">Sistem Praktik Kearsipan Digital<br><span class="font-semibold text-primary-600 dark:text-primary-400">SMKN 1 JOGONALAN</span></p>
+            </div>
+            
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Username</label>
+                    <input type="text" id="username" required class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none transition dark:text-white" placeholder="administrator / guru">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Password</label>
+                    <input type="password" id="password" required class="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none transition dark:text-white" placeholder="••••••••">
+                </div>
+                <button type="submit" class="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-3 rounded-xl shadow-lg shadow-primary-200 dark:shadow-none transition-all transform active:scale-95">
+                    Masuk Sistem
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Aplikasi Utama -->
+    <div id="mainApp" class="hidden flex min-h-screen">
+        <aside class="w-64 bg-white dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col fixed h-full z-10 transition-colors">
+            <div class="p-6 flex items-center gap-3 border-b border-slate-100 dark:border-slate-700">
+                <div class="bg-primary-600 p-1.5 rounded-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
+                    </svg>
+                </div>
+                <div>
+                    <span class="font-bold text-lg text-slate-800 dark:text-white block leading-none">ARC IBS</span>
+                    <span class="text-[10px] text-slate-400 uppercase tracking-widest">SMKN 1 JOGONALAN</span>
+                </div>
+            </div>
+            
+            <nav class="flex-1 p-4 space-y-2 mt-4">
+                <button onclick="showPage('dashboard')" id="nav-dashboard" class="sidebar-link active w-full flex items-center gap-3 px-4 py-3 rounded-xl transition font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 text-left">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+                    Dashboard
+                </button>
+                <button onclick="showPage('addArchive')" id="nav-addArchive" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl transition font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 text-left">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    Tambah Arsip
+                </button>
+                <button onclick="showPage('listArchive')" id="nav-listArchive" class="sidebar-link w-full flex items-center gap-3 px-4 py-3 rounded-xl transition font-medium text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 text-left">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                    Data Arsip
+                </button>
+            </nav>
+            
+            <div class="p-4 border-t border-slate-100 dark:border-slate-700 space-y-2">
+                <button onclick="toggleDarkMode()" class="w-full flex items-center justify-between px-4 py-2 bg-slate-100 dark:bg-slate-700 rounded-lg transition-colors group">
+                    <div class="flex items-center gap-3 text-slate-600 dark:text-slate-300 font-medium text-sm">
+                        <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 hidden dark:block" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+                        <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 block dark:hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" /></svg>
+                        <span id="themeText">Light Mode</span>
+                    </div>
+                </button>
+                <button onclick="logout()" class="w-full flex items-center gap-3 px-4 py-2 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition font-medium">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" /></svg>
+                    Keluar
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 ml-64 p-8">
+            <!-- Dashboard -->
+            <section id="page-dashboard" class="page">
+                <div class="flex justify-between items-end mb-8">
+                    <div>
+                        <h2 class="text-3xl font-bold text-slate-800 dark:text-white">Dashboard</h2>
+                        <p class="text-slate-500 dark:text-slate-400">Ringkasan statistik kearsipan saat ini</p>
+                    </div>
+                    <div class="text-sm text-slate-400" id="currentDate"></div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div onclick="showPage('listArchive')" class="cursor-pointer group bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 border-l-4 border-l-primary-500 hover:shadow-md transition-all">
+                        <p class="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase">Total Arsip</p>
+                        <h3 class="text-4xl font-bold text-slate-800 dark:text-white mt-1 group-hover:text-primary-600" id="stat-total">0</h3>
+                    </div>
+                    <div onclick="showFilteredArchive('Surat Masuk')" class="cursor-pointer group bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 border-l-4 border-l-emerald-500 hover:shadow-md transition-all">
+                        <p class="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase">Surat Masuk</p>
+                        <h3 class="text-4xl font-bold text-slate-800 dark:text-white mt-1 group-hover:text-emerald-600" id="stat-masuk">0</h3>
+                    </div>
+                    <div onclick="showFilteredArchive('Surat Keluar')" class="cursor-pointer group bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-700 border-l-4 border-l-rose-500 hover:shadow-md transition-all">
+                        <p class="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase">Surat Keluar</p>
+                        <h3 class="text-4xl font-bold text-slate-800 dark:text-white mt-1 group-hover:text-rose-600" id="stat-keluar">0</h3>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm p-6">
+                    <h4 class="font-bold text-lg mb-4 text-slate-800 dark:text-white">Aktivitas Terbaru</h4>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="text-left border-b border-slate-100 dark:border-slate-700 text-slate-400 text-sm uppercase">
+                                    <th class="pb-3 font-semibold">Judul</th>
+                                    <th class="pb-3 font-semibold">Kategori</th>
+                                    <th class="pb-3 font-semibold text-right">Tanggal</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recentTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Form Tambah Arsip -->
+            <section id="page-addArchive" class="page hidden max-w-2xl">
+                <div class="mb-8">
+                    <h2 class="text-3xl font-bold text-slate-800 dark:text-white">Tambah Arsip Baru</h2>
+                    <p class="text-slate-500 dark:text-slate-400">Pastikan file dalam format PDF</p>
+                </div>
+                <div class="bg-white dark:bg-slate-800 p-8 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                    <form id="archiveForm" class="space-y-5">
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Judul Arsip</label>
+                            <input type="text" id="arcTitle" required class="w-full p-3 bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none dark:text-white" placeholder="Contoh: Surat Undangan Rapat Komite">
+                        </div>
+                        
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="space-y-2">
+                                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Nomor Surat</label>
+                                <input type="text" id="arcNumber" required class="w-full p-3 bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none dark:text-white" placeholder="001/SMKN1JOG/2026">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Kategori</label>
+                                <select id="arcCategory" class="w-full p-3 bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-primary-500 outline-none dark:text-white">
+                                    <option value="Surat Masuk">Surat Masuk</option>
+                                    <option value="Surat Keluar">Surat Keluar</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Unggah File PDF</label>
+                            <div class="relative group h-48 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-2xl flex flex-col items-center justify-center bg-slate-50/50 dark:bg-slate-900/30 hover:border-primary-500 hover:bg-primary-50/10 transition-all overflow-hidden">
+                                <input type="file" id="arcFile" accept="application/pdf" onchange="handleFileSelect(this)" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20">
+                                <div id="fileInfoDisplay" class="flex flex-col items-center justify-center p-4">
+                                    <div class="bg-primary-500 p-3 rounded-full text-white shadow-lg group-hover:scale-110 transition-transform mb-3">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                    <span class="text-sm font-medium text-slate-600 dark:text-slate-400 text-center" id="fileStatus">Klik atau seret file PDF ke sini</span>
+                                    <p class="text-[10px] text-slate-400 mt-1 uppercase">Maksimal 2MB</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" id="submitBtn" class="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold py-4 rounded-xl shadow-lg transition transform active:scale-95 disabled:bg-slate-400">
+                            Simpan ke Data Arsip
+                        </button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Tabel Data Arsip -->
+            <section id="page-listArchive" class="page hidden">
+                <div class="flex justify-between items-center mb-8">
+                    <div>
+                        <h2 class="text-3xl font-bold text-slate-800 dark:text-white" id="listTitle">Data Kearsipan</h2>
+                        <p class="text-slate-500 dark:text-slate-400">Daftar seluruh surat yang tersimpan</p>
+                    </div>
+                    <button id="resetBtn" onclick="renderArchiveList()" class="hidden bg-slate-200 dark:bg-slate-700 px-4 py-2 rounded-lg text-sm">Lihat Semua</button>
+                </div>
+                
+                <div class="bg-white dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700 shadow-sm overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full border-collapse">
+                            <thead class="bg-slate-50 dark:bg-slate-900/50">
+                                <tr class="text-left text-slate-500 dark:text-slate-400 text-xs uppercase tracking-wider">
+                                    <th class="p-5 font-bold">No. Surat</th>
+                                    <th class="p-5 font-bold">Judul Arsip</th>
+                                    <th class="p-5 font-bold">Kategori</th>
+                                    <th class="p-5 font-bold text-center">Dokumen</th>
+                                    <th class="p-5 font-bold text-right">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="archiveTableBody" class="divide-y divide-slate-100 dark:divide-slate-700"></tbody>
+                        </table>
+                    </div>
+                    <div id="noDataState" class="hidden p-20 text-center flex flex-col items-center">
+                        <p class="text-slate-400 text-sm italic">Belum ada data terekam.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-8 right-8 text-white px-6 py-4 rounded-2xl shadow-2xl transition-all duration-500 transform translate-y-32 opacity-0 z-50"></div>
+
+    <script>
+        let archives = JSON.parse(localStorage.getItem('arc_data')) || [];
+        let currentUser = null;
+        let selectedFileBase64 = null;
+        let selectedFileName = null;
+
+        // Login Logic
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const u = document.getElementById('username').value.toLowerCase();
+            const p = document.getElementById('password').value;
+            if (u === 'administrator' && p === '123456') login('ADMINISTRATOR', 'Admin Utama');
+            else if (u === 'guru' && p === '654321') login('GURU SMK', 'Staff Pengajar');
+            else showToast("Username atau Password salah!", "error");
+        });
+
+        function login(name, role) {
+            currentUser = { name, role };
+            localStorage.setItem('arc_user', JSON.stringify(currentUser));
+            initApp();
+            showToast(`Selamat datang, ${name}!`);
+        }
+
+        function logout() {
+            if(confirm("Apakah Anda ingin keluar?")) {
+                localStorage.removeItem('arc_user');
+                location.reload();
+            }
+        }
+
+        function initApp() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('mainApp').classList.remove('hidden');
+            document.getElementById('currentDate').innerText = new Date().toLocaleDateString('id-ID', {weekday:'long', day:'numeric', month:'long', year:'numeric'});
+            updateStats();
+            renderArchiveList();
+            renderRecentActivity();
+        }
+
+        window.onload = () => {
+            const saved = JSON.parse(localStorage.getItem('arc_user'));
+            if(saved) {
+                currentUser = saved;
+                initApp();
+            }
+        }
+
+        // Navigation
+        function showPage(id) {
+            document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+            document.getElementById(`page-${id}`).classList.remove('hidden');
+            document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+            const activeNav = document.getElementById(`nav-${id}`);
+            if(activeNav) activeNav.classList.add('active');
+        }
+
+        function showFilteredArchive(cat) {
+            showPage('listArchive');
+            document.getElementById('listTitle').innerText = "Arsip: " + cat;
+            document.getElementById('resetBtn').classList.remove('hidden');
+            renderArchiveList(cat);
+        }
+
+        // File Handler
+        function handleFileSelect(input) {
+            const status = document.getElementById('fileStatus');
+            const file = input.files[0];
+            if(file) {
+                if(file.type !== 'application/pdf') {
+                    showToast("Hanya file PDF yang diizinkan!", "error");
+                    input.value = "";
+                    return;
+                }
+                if(file.size > 2 * 1024 * 1024) {
+                    showToast("Maksimal ukuran file 2MB!", "error");
+                    input.value = "";
+                    return;
+                }
+                selectedFileName = file.name;
+                status.innerHTML = `<span class="text-primary-600 font-bold">${file.name}</span>`;
+                const reader = new FileReader();
+                reader.onload = (e) => { selectedFileBase64 = e.target.result; };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Form Submit
+        document.getElementById('archiveForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            if(!selectedFileBase64) {
+                showToast("Pilih file PDF terlebih dahulu!", "error");
+                return;
+            }
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.innerHTML = `<div class="loader"></div> Menyimpan...`;
+
+            const newArc = {
+                id: 'ARC-' + Date.now(),
+                title: document.getElementById('arcTitle').value,
+                number: document.getElementById('arcNumber').value,
+                category: document.getElementById('arcCategory').value,
+                fileName: selectedFileName,
+                fileData: selectedFileBase64,
+                date: new Date().toISOString()
+            };
+
+            archives.unshift(newArc);
+            try {
+                localStorage.setItem('arc_data', JSON.stringify(archives));
+                showToast("Arsip berhasil disimpan!");
+                e.target.reset();
+                selectedFileBase64 = null;
+                document.getElementById('fileStatus').innerText = "Klik atau seret file PDF ke sini";
+                updateStats();
+                showPage('listArchive');
+                renderArchiveList();
+                renderRecentActivity();
+            } catch (err) {
+                showToast("Penyimpanan penuh! Coba file yang lebih kecil.", "error");
+                archives.shift();
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = "Simpan ke Data Arsip";
+            }
+        });
+
+        /**
+         * FIX: Fungsi untuk membuka pratinjau PDF di tab baru
+         * Menggunakan metode pembukaan Base64 yang lebih stabil untuk browser modern.
+         */
+        function openPdf(id) {
+            const arc = archives.find(a => a.id === id);
+            if (!arc || !arc.fileData) {
+                showToast("File tidak ditemukan!", "error");
+                return;
+            }
+
+            try {
+                // Menghapus prefix data:application/pdf;base64,
+                const base64Parts = arc.fileData.split(',');
+                const byteCharacters = atob(base64Parts[1]);
+                const byteNumbers = new Array(byteCharacters.length);
+                
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                
+                const byteArray = new Uint8Array(byteNumbers);
+                const blob = new Blob([byteArray], { type: 'application/pdf' });
+                const fileURL = URL.createObjectURL(blob);
+                
+                // Buka tab baru dengan URL blob
+                window.open(fileURL, '_blank');
+            } catch (error) {
+                // Fallback jika blob gagal
+                const win = window.open();
+                if (win) {
+                    win.document.write(`
+                        <title>Pratinjau: ${arc.title}</title>
+                        <body style="margin:0;padding:0;overflow:hidden;">
+                            <iframe src="${arc.fileData}" frameborder="0" style="border:none; width:100%; height:100vh;" allowfullscreen></iframe>
+                        </body>
+                    `);
+                } else {
+                    showToast("Browser memblokir jendela baru!", "error");
+                }
+            }
+        }
+
+        // Render functions
+        function renderArchiveList(filter = null) {
+            const tbody = document.getElementById('archiveTableBody');
+            const data = filter ? archives.filter(a => a.category === filter) : archives;
+            tbody.innerHTML = data.map(a => `
+                <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                    <td class="p-5 font-mono text-xs text-slate-500">${a.number}</td>
+                    <td class="p-5 font-bold text-slate-800 dark:text-white">${a.title}</td>
+                    <td class="p-5">
+                        <span class="px-3 py-1 rounded-full text-[10px] font-bold uppercase ${a.category === 'Surat Masuk' ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}">
+                            ${a.category}
+                        </span>
+                    </td>
+                    <td class="p-5 text-center">
+                        <button onclick="openPdf('${a.id}')" class="bg-primary-600 text-white px-4 py-2 rounded-xl text-xs font-bold hover:bg-primary-700 shadow-sm flex items-center gap-2 mx-auto">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" /></svg>
+                            Lihat Dokumen
+                        </button>
+                    </td>
+                    <td class="p-5 text-right">
+                        <button onclick="deleteArc('${a.id}')" class="text-rose-500 hover:text-rose-700 font-bold text-xs p-2">Hapus</button>
+                    </td>
+                </tr>
+            `).join('');
+            document.getElementById('noDataState').classList.toggle('hidden', data.length > 0);
+        }
+
+        function renderRecentActivity() {
+            const tbody = document.getElementById('recentTable');
+            const items = archives.slice(0, 5);
+            tbody.innerHTML = items.map(a => `
+                <tr class="text-sm border-b border-slate-50 dark:border-slate-700/50">
+                    <td class="py-4 font-medium">${a.title}</td>
+                    <td class="py-4 text-xs font-bold ${a.category==='Surat Masuk'?'text-emerald-500':'text-rose-500'} uppercase">${a.category}</td>
+                    <td class="py-4 text-right text-slate-400 text-xs">${new Date(a.date).toLocaleDateString('id-ID')}</td>
+                </tr>
+            `).join('');
+            if(!items.length) tbody.innerHTML = '<tr><td colspan="3" class="py-10 text-center text-slate-400 italic">Belum ada aktivitas</td></tr>';
+        }
+
+        function deleteArc(id) {
+            if(confirm("Hapus arsip ini?")) {
+                archives = archives.filter(a => a.id !== id);
+                localStorage.setItem('arc_data', JSON.stringify(archives));
+                renderArchiveList();
+                renderRecentActivity();
+                updateStats();
+            }
+        }
+
+        function updateStats() {
+            document.getElementById('stat-total').innerText = archives.length;
+            document.getElementById('stat-masuk').innerText = archives.filter(a => a.category === 'Surat Masuk').length;
+            document.getElementById('stat-keluar').innerText = archives.filter(a => a.category === 'Surat Keluar').length;
+        }
+
+        function showToast(msg, type="success") {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.className = `fixed bottom-8 right-8 text-white px-6 py-4 rounded-2xl shadow-2xl transition-all transform z-50 ${type==='success'?'bg-primary-600':'bg-red-600'}`;
+            t.classList.remove('translate-y-32', 'opacity-0');
+            setTimeout(() => t.classList.add('translate-y-32', 'opacity-0'), 3000);
+        }
+
+        function toggleDarkMode() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            document.getElementById('themeText').innerText = isDark ? "Dark Mode" : "Light Mode";
+        }
+    </script>
+</body>
+</html>
